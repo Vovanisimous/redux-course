@@ -1,3 +1,5 @@
+// Здесь мы попытались написат свой createStore, который есть в Redux, чтобы понять, как он работает. эта функция нигде не будет использоваться
+
 export function createStore(rootReducer, initialState) {
     let state = rootReducer(initialState, {type: "__INIT__"});
     const subscribers = [];
