@@ -1,4 +1,4 @@
-import {CHANGE_THEME, DECREMENT, INCREMENT} from "./types";
+import {CHANGE_THEME, DECREMENT, DISABLE_BUTTONS, ENABLE_BUTTONS, INCREMENT} from "./types";
 import {combineReducers} from "redux";
 
 // Тут все reducers, которые относятся к counter. Initial state передается сразу в зависимость функции (здесь = 0). Reducers написаны ввиде if/else,
@@ -16,7 +16,8 @@ function counterReducer(state = 0, action) {
 
 // Иногда initial states нужно сначала написать в виде констант для легкой читаемости кода
 const initialThemeState = {
-    value: "light"
+    value: "light",
+    disabled: false
 }
 
 // Тут reducers, котрые относятся к theme
@@ -26,6 +27,10 @@ function themeReducer(state = initialThemeState, action) {
         case CHANGE_THEME:
             // !!! Reducers не должны мутировать исходные состояния !!! Поэтому мы сначала клонируем сотояние, мутируем, и возвращаем клона
             return {...state, value: action.payload}
+        case ENABLE_BUTTONS:
+            return {...state, disabled: false}
+        case DISABLE_BUTTONS:
+            return {...state, disabled: true}
         default: return state
     }
 }

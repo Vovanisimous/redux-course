@@ -1,4 +1,4 @@
-import './styles.css'
+import '../styles.css'
 
 // Привязка переменных к элементам в index.html
 const counter = document.getElementById('counter')

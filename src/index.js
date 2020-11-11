@@ -1,4 +1,5 @@
-import {applyMiddleware, createStore} from "redux";
+import {applyMiddleware, createStore, compose} from "redux";
+import {composeWithDevTools} from "redux-devtools-extension";
 // Позволяет писать асинхронные изменения состояний
 import thunk from "redux-thunk";
 // Красиво логгирует изменения состояний в консоль
@@ -17,8 +18,9 @@ const asyncBtn = document.getElementById('async')
 const themeBtn = document.getElementById('theme')
 
 
-// Создаем зранилище через Redux, в который мы передаем наш reducer и middlewares
-const store = createStore(rootReducer, applyMiddleware(thunk, logger));
+// Создаем зранилище через Redux, в который мы передаем наш reducer и middlewares. ComposeWithDevTools позволяет использовать devTools в нашем приложении.
+// Если не нужны devTools, то composeWithDevTools убераем, и оставляем толь applyMiddleware
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk, logger)));
 
 
 addBtn.addEventListener('click', () => {
@@ -50,7 +52,9 @@ store.subscribe(() => {
     // Добавление переменной state.counter к span элементу counter в качестве строки
     counter.textContent = state.counter;
     // Передает переменную state.theme.value к классу компонента body
-    document.body.className = state.theme.value
+    document.body.className = state.theme.value;
+
+    [addBtn, subBtn, themeBtn, asyncBtn].forEach(btn => btn.disabled = state.theme.disabled)
 })
 
 // Инициализация всех состояний в store про прогрузке страницы
